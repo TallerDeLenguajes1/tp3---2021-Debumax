@@ -1,0 +1,5 @@
+#ignora todos los archivos que terminen en : 
+
+*.exe
+*.obj
+*.tds
