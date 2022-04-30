@@ -23,7 +23,7 @@ char *TiposProductos[]={"Galleta","Snack","Cigarrillos","Caramelos","Bebidas"};
 
 void cargaClientes(Tclientes *clientes,int cantClientes);
 void mostrarDatosClientes(Tclientes *clientes ,int  cantClientes);
-
+float costoProducto(TProductos *productos);
 
 int main(){
 	
@@ -63,15 +63,17 @@ void cargaClientes(Tclientes *clientes,int cantClientes){
 			clientes[i].Productos[j].Cantidad=rand()%10+1;
 			int ind=rand()%5;
 			clientes[i].Productos[j].TipoProducto=TiposProductos[ind];//direccion de memoria del elemento
-			clientes[i].Productos[j].PrecioUnitario=rand()%90+10;
-			
-			
+			clientes[i].Productos[j].PrecioUnitario=rand()%90+10; 
+
 		}
 	}
 }	
 
-
-
+float costoProducto(TProductos *productos){
+	float costo=0;
+	costo=(float)productos->Cantidad * productos->PrecioUnitario;
+	return costo;
+}
 
 void mostrarDatosClientes(Tclientes *clientes ,int  cantClientes){
 	int i,j;
@@ -79,6 +81,7 @@ void mostrarDatosClientes(Tclientes *clientes ,int  cantClientes){
 		printf("cliente Id: %d\n",clientes[i].ClienteID);
 		printf("nombre cliente: %s\n",clientes[i].NombreCliente);
 		printf("cantidad de productos: %d\n",clientes[i].Cantprod);
+		float suma=0;
 		
 		for(j=0;j<clientes[i].Cantprod;j++){
 			printf("\n");
@@ -87,10 +90,19 @@ void mostrarDatosClientes(Tclientes *clientes ,int  cantClientes){
 			printf("     tipo de prodcuto: %s\n",clientes[i].Productos[j].TipoProducto);
 			printf("     precio: %f\n",clientes[i].Productos[j].PrecioUnitario);
 			printf("\n");
-			printf("****\n");
+			//CALCULO EL COSTO TOTAL DE 1 PRODUCTO
+			printf("     Costo : %f\n",costoProducto(&clientes[i].Productos[j]));
+			/* para poder acceder a los datos de 1 producto debo mandar la direccion de memoria de 
+				ese producto y luego puedo acceder a la estructura a la que apunto
+			*/
+			
+			suma=suma + costoProducto(&clientes[i].Productos[j]);
+		
+			printf("     ****\n");
 			printf("\n");
 		
 		}
+			printf("     suma total por cliente: %f\n",suma);
 		printf("----------------\n");
 	}
 	printf("\n");
